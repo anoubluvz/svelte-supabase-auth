@@ -1,2 +1,2 @@
-# Simple Blogging Website
-Simple blogging website coded using SvelteJS and Supabase
+# Simple Authentication for Websites
+Simple authentication for websites coded using SvelteJS and Supabase
