@@ -1,6 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = __api.env.SVELTE_APP_SUPABASE_URL;
-const supabaseAnonKey = __api.env.SVELTE_APP_SUPABASE_ANON_KEY;
+import { SVELTE_APP_SUPABASE_URL, SVELTE_APP_SUPABASE_ANON_KEY } from "./env";
+
+const supabaseUrl = SVELTE_APP_SUPABASE_URL;
+const supabaseAnonKey = SVELTE_APP_SUPABASE_ANON_KEY;
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);

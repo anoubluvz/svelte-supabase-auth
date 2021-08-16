@@ -2,7 +2,8 @@
 	import { supabase } from "./supabaseClient";
 	import { user } from "./sessionStore";
 	import Login from "./Login.svelte";
-
+	import Signup from "./Signup.svelte";
+	
 	let loginPopup = false;
 	let signupPopup = false;
 
@@ -41,13 +42,29 @@
 				break;
 		}
 	}
+
+	const closePopups = () => {
+		loginPopup = false;
+		signupPopup = false;
+	}
 </script>
 
 <main>
     <h1>Simple authentication app</h1>
+	{#if loginPopup == true}
+	<button on:click={closePopups}>X</button>
+	{/if}
+	{#if signupPopup == true}
+	<button on:click={closePopups}>X</button>
+	{/if}
 	{#if loginPopup == false}
-	<button on:click={popupHandler("login")}>Login</button>
+	{#if signupPopup == false}
+	<button on:click={() => popupHandler("login")}>Login/Signup</button>
+	{/if}
 	{:else}
 	<Login on:switch={switchHandler} />
+	{/if}
+	{#if signupPopup}
+	<Signup on:switch={switchHandler} />
 	{/if}
 </main>

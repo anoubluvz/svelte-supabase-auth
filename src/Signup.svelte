@@ -6,23 +6,25 @@
 
     let email;
     let password;
+    let username;
 
     let loading = false;
     
-    const handleLogin = async () => {
+    const handleSignup = async () => {
         loading = true;
     }
 
-    const handleSignup = () => dispatch("switch", "signup");
+    const handleLogin = () => dispatch("switch", "login");
 </script>
 
 {#if loading == false}
-<form class="loginForm" on:submit|preventDefault={handleLogin}>
+<form class="loginForm" on:submit|preventDefault={handleSignup}>
+    <input type="text" bind:value={username} placeholder="Enter your username" min=3>
     <input type="email" bind:value={email} placeholder="Enter your email" min=3>
     <input type="password" bind:value={password} placeholder="Enter your password" min=3>
     <button type="submit">Login</button>
     <!-- svelte-ignore a11y-missing-attribute -->
-    <a on:click={handleSignup}>Don't have an account?</a>
+    <a on:click={handleLogin}>Already have an account?</a>
 </form>
 {:else}
 <div>Please wait...</div>
