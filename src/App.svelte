@@ -60,7 +60,7 @@
 		finally
 		{
 			loading = false;
-			window.location.href = "/";
+			window.location.reload();
 		}
 	}
 </script>
