@@ -3,14 +3,15 @@
 	import { user } from "./sessionStore";
 	import Login from "./Login.svelte";
 	import Signup from "./Signup.svelte";
-	
+
 	let loginPopup = false;
 	let signupPopup = false;
+	let loading = false;
 
-	user.set(supabase.auth.user);
+	user.set(supabase.auth.user());
 
 	supabase.auth.onAuthStateChange((__, session) => {
-		user.set(session);
+		user.set(session.user);
 	});
 
 	const popupHandler = (popupType) => {
@@ -47,10 +48,31 @@
 		loginPopup = false;
 		signupPopup = false;
 	}
+
+	const logOut = async () => {
+		try
+		{
+			loading = true;
+			let { error } = await supabase.auth.signOut();
+			if(error)
+				throw error;
+		}
+		finally
+		{
+			loading = false;
+			window.location.href = "/";
+		}
+	}
 </script>
 
 <main>
     <h1>Simple authentication app</h1>
+	{#if loading == false}
+	{#if $user}
+	<div>Logged in as {$user.email}</div>
+	<div>User ID: {$user.id}</div>
+	<button on:click={logOut}>Logout</button>
+	{:else}
 	{#if loginPopup == true}
 	<button on:click={closePopups}>X</button>
 	{/if}
@@ -66,5 +88,9 @@
 	{/if}
 	{#if signupPopup}
 	<Signup on:switch={switchHandler} />
+	{/if}
+	{/if}
+	{:else}
+	<div>Please wait...</div>
 	{/if}
 </main>

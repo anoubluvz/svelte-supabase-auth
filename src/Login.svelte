@@ -10,7 +10,24 @@
     let loading = false;
     
     const handleLogin = async () => {
-        loading = true;
+        try
+        {
+            loading = true;
+            let { error } = await supabase.auth.signIn({
+                email,
+                password
+            });
+            if(error)
+                throw error;
+        }
+        catch(err)
+        {
+            alert(err.message);
+        }
+        finally
+        {
+            loading = false;
+        }
     }
 
     const handleSignup = () => dispatch("switch", "signup");

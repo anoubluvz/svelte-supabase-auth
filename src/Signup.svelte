@@ -11,7 +11,25 @@
     let loading = false;
     
     const handleSignup = async () => {
-        loading = true;
+        try
+        {
+            loading = true;
+            let { error } = await supabase.auth.signUp({
+                email,
+                password
+            });
+            if(error)
+                throw error;
+        }
+        catch(err)
+        {
+            alert(err.message);
+        }
+        finally
+        {
+            loading = false;
+            alert("Check your email for a verification link");
+        }
     }
 
     const handleLogin = () => dispatch("switch", "login");
@@ -22,7 +40,7 @@
     <input type="text" bind:value={username} placeholder="Enter your username" min=3>
     <input type="email" bind:value={email} placeholder="Enter your email" min=3>
     <input type="password" bind:value={password} placeholder="Enter your password" min=3>
-    <button type="submit">Login</button>
+    <button type="submit">Sign up</button>
     <!-- svelte-ignore a11y-missing-attribute -->
     <a on:click={handleLogin}>Already have an account?</a>
 </form>
