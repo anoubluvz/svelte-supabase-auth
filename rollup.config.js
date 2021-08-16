@@ -48,6 +48,7 @@ export default {
                     ...config().parsed
                 }
             }),
+			preventAssignment: true
         }),
         json(),
 
